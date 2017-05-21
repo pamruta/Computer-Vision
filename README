@@ -1,0 +1,19 @@
+
+This directory provides scripts for computer vision algorithms.
+
+[1] face-detect-video.py: Real-Time Face Detection implemented in Python using OpenCV library.
+
+	Usage: python face-detect-video.py [VIDEO-FILE]
+	e.g. python face-detect-video.py samples/face.mp4
+
+	If no video-file is given, it will capture video from your computer's webcam.
+
+[2] person-detect-video.py: Real-Time Person Detection implemented in Python using OpenCV library.
+
+	Usage: python person-detect-video.py [VIDEO-FILE]
+        e.g. python person-detect-video.py samples/person.mp4
+
+        If no video-file is given, it will capture video from your computer's webcam.
+
+
+Directory /samples contains sample image and video files for testing.
