@@ -31,7 +31,7 @@ for symbol in image:
 	barcode = str(symbol.data)
 	print '[Code_Type =', code_type, ', Code =', barcode, ']'
 
-	# getting the product name
+	# fetching the product name
 	base_url = "https://www.upccodesearch.com/api/v1/"
 	if(code_type == "UPCA" or code_type == "UPCE"):
 		web_url = base_url + "upc/" + barcode
@@ -39,6 +39,7 @@ for symbol in image:
 		web_url = base_url + "ean/" + barcode
 	else:
 		print "ERROR: Can't process barcodes of type = ", code_type
+
 	if web_url != "":
 		response = requests.get(web_url)
 		json_output = json.loads(response.content)
