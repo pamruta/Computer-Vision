@@ -15,5 +15,15 @@ This directory provides scripts for computer vision algorithms.
 
         If no video-file is given, it will capture video from your computer's webcam.
 
+[3] barcode.py: Barcode Scanner implemented in Python using OpenCV and Zbar libraries.
+
+	Scans and prints the barcode in the given input image-file, along with the product-name
+	if the product is listed in the UPC Database.
+
+	Usage: python barcode.py [IMAGE-FILE]
+	e.g. python barcode.py samples/barcode.png
+
+	If the product is not found in the UPC Database, only the barcode is printed.
+
 
 Directory /samples contains sample image and video files for testing.
