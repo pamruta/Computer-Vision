@@ -10,6 +10,7 @@ import sys
 import requests
 import json
 
+# handling UTF-8 encoded characters
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 
