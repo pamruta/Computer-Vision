@@ -44,7 +44,7 @@ for symbol in image:
 	if web_url != "":
 		response = requests.get(web_url)
 		json_output = json.loads(response.content)
-		# product found
+		# product found in UPC database
 		if 'item' in json_output:
 			print "Title = ", json_output['item']['title']
 		# print error message
