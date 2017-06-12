@@ -7,7 +7,6 @@
 # importing libraries
 import io
 import sys
-import re
 
 # importing google cloud-vision library
 from google.cloud import vision
