@@ -32,7 +32,7 @@ for symbol in image:
 	barcode = str(symbol.data)
 	print '[Code_Type =', code_type, ', Code =', barcode, ']'
 
-	# fetching the product name
+	# fetching the product name from UPC database
 	base_url = "https://www.upccodesearch.com/api/v1/"
 	if(code_type == "UPCA" or code_type == "UPCE"):
 		web_url = base_url + "upc/" + barcode
