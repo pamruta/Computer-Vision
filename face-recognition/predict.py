@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 
-# loading the model trained on sample images
+# loading the trained model 
 recognizer = cv2.createLBPHFaceRecognizer()
 recognizer.load("trained-model.yml")
 
@@ -18,7 +18,7 @@ else:
 	cam = cv2.VideoCapture(0)
 
 # array of names to be identified
-face_ids = ['none', 'rachel', 'joey', 'monica', 'ross', 'chandler', 'phoebe']
+face_ids = ['amruta', 'pooja', 'shirin', 'swathi', 'sunpriya']
 
 while 1:
 
@@ -35,9 +35,9 @@ while 1:
     for (x, y, w, h) in faces:
 	id, conf = recognizer.predict(gray[y:y+h,x:x+w])
 	label = face_ids[id]
-	if conf < 200:
-		cv2.rectangle(frame, (x,y), (x+w, y+h), (255, 255, 0), 2)
-		cv2.putText(frame, label, (x, y+h), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+	text = label + " [conf = " + str(conf) + "]"
+	cv2.rectangle(frame, (x,y), (x+w, y+h), (255, 255, 0), 2)
+	cv2.putText(frame, text, (x, y+h), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
     # show output
     cv2.imshow('webcam', frame)

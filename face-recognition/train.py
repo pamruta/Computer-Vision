@@ -7,11 +7,10 @@ import cv2
 import sys
 import numpy as np
 from PIL import Image
-import time
 
-# face recognizer
+# loading face recognizer
 recognizer = cv2.createLBPHFaceRecognizer()
-# face detector
+# loading face detector
 detector = cv2.CascadeClassifier("/Users/pamruta/opencv/data/haarcascades/haarcascade_frontalface_default.xml")
 
 # path to training directory
@@ -20,21 +19,19 @@ path = sys.argv[1]
 face_samples = []
 face_labels = []
 
-# assigning ids
-face_ids = {'rachel': 1, 'joey': 2, 'monica': 3, 'ross': 4, 'chandler': 5, 'phoebe': 6}
+# assigning ids to each person
+face_ids = {'amruta' : 0, 'pooja': 1, 'shirin': 2, 'swathi': 3, 'sunpriya': 4}
 
 # processing each image in the training directory
 for image_file in os.listdir(path):
-	# extract name of the person from filename
+	# extract person name from filename
 	label, ext = re.split(r'\-', image_file)
-
-	print "processing file ", image_file, " : ", label
 
 	# loading the image
 	pilImage = Image.open(os.path.join(path, image_file)).convert('L')
 	image = np.array(pilImage, 'uint8')
 
-	# face detection
+	# marking boundary around each face detected
 	faces = detector.detectMultiScale(image)
 	for (x,y,w,h) in faces:
 		face_samples.append(image[y:y+h, x:x+w])
