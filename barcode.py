@@ -46,7 +46,9 @@ for symbol in image:
 		json_output = json.loads(response.content)
 		# product found in UPC database
 		if 'item' in json_output:
-			print "Label = ", json_output['item']['title']
+			# json returns multiple items
+			if 'asins' in json_output['item']:
+				print "Label = ", json_output['item']['asins'][0]['title']
 		# print error message
 		else:
 			print "Error = ", json_output['message']
