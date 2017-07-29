@@ -6,14 +6,14 @@ This directory provides scripts for computer vision algorithms.
 	Usage: python face-detect.py [VIDEO-FILE]
 	e.g. python face-detect.py samples/face.mp4
 
-	If no video-file is given, it will capture video from your computer's webcam.
+	If no video-file is given, it will capture the live video from your computer's webcam.
 
 [2] person-detect.py: Real-Time Person Detection implemented in Python using OpenCV library.
 
 	Usage: python person-detect.py [VIDEO-FILE]
         e.g. python person-detect.py samples/person.mp4
 
-        If no video-file is given, it will capture video from your computer's webcam.
+        If no video-file is given, it will capture the live video from your computer's webcam.
 
 [3] barcode.py: Barcode Scanner implemented in Python using Zbar library.
 
