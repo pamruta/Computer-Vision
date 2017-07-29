@@ -31,4 +31,9 @@ This directory provides scripts for computer vision algorithms.
 	Usage: python ocr.py [IMAGE-FILE]
 	e.g. python ocr.py samples/ocr.jpeg
 
+[5] stream.py: Live video streaming
+
+	Usage: stream.py [VIDEO-FILE]
+	If no video-file is provided, streaming will capture the video from webcam.
+
 Directory /samples contains sample image and video files for testing.
