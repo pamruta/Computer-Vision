@@ -1,0 +1,15 @@
+
+This directory contains following scripts:
+
+[1] index-faces-local.py: creates a face-collection for reference images stored in 'ref-faces' directory.
+
+[2] index-faces-s3.py: creates a face-collection for references images in S3 photo-bucket.
+
+[3] recognize-face.py: performs face recognition on a given image-file.
+
+	Usage: python recognize-face.py IMAGE COLLECTION
+
+	where, COLLECTION is created by adding face images using one of the 'index-faces' scripts above.
+	
+	Script recognize-face.py compares the given IMAGE against the faces indexed in the COLLECTION, and 
+	returns the best match.
