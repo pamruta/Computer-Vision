@@ -36,4 +36,7 @@ This directory provides scripts for computer vision algorithms.
 	Usage: stream.py [VIDEO-FILE]
 	If no video-file is provided, streaming will capture the video from webcam.
 
+[6] face-recognition: Directory contains code for face-recognition on FRIENDS tv characters.
+
+
 Directory /samples contains sample image and video files for testing.
