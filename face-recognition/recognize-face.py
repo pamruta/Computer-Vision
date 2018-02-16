@@ -14,4 +14,7 @@ import boto3
 client = boto3.client('rekognition')
 with open(image_file, 'rb') as image:
 	result = client.search_faces_by_image(CollectionId=collection, Image={'Bytes': image.read()}, MaxFaces = 1, FaceMatchThreshold = 70)
-	print result['FaceMatches'][0]['Face']['ExternalImageId']
+	if len(result['FaceMatches']) == 0:
+		print "NULL"
+	else:
+		print result['FaceMatches'][0]['Face']['ExternalImageId']
