@@ -25,11 +25,9 @@ This directory provides scripts for computer vision algorithms.
 
 	If the product is not found in the UPC Database, only the barcode is printed.
 
-[4] ocr.py: Optical Character Recognition (OCR) to extract text from images using
-	Google's Cloud Vision API
+[4] OCR: Directory containing implementation of Optical Character Recognition using 
+	Google Vision, AWS Rekognition and Tesseract
 
-	Usage: python ocr.py [IMAGE-FILE]
-	e.g. python ocr.py samples/ocr.jpeg
 
 [5] stream.py: Live video streaming
 
