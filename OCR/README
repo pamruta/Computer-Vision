@@ -1,0 +1,30 @@
+
+
+This directory contains implementation of OCR or Optical Character Recognition
+using Google Vision, AWS Rekognition and Tesseract.
+
+[1] ocr-service.py:	REST API built in Python Flask.
+			After running "python ocr-service.py", visit: 127.0.0.1:5000/ocr
+			in your browser. The API takes 2 parameters:
+			choice: [aws, google-vision, tesseract]
+			file: INPUT FILE-NAME to run OCR.
+			      The input file should be placed in /static directory.
+
+			e.g. 127.0.0.1:5000/ocr?choice=google-vision&file=1.jpg
+
+			The above API call will run google-vision OCR on file static/1.jpg
+
+[2] aws-ocr.py:		Python program to run OCR from AWS Rekognition library.
+			Please install AWS SDK boto3 and set your AWS credentials to run this script.
+
+			Usage: python aws-ocr.py INPUT-FILE
+
+[3] google-ocr.py:	Python script to run OCR from Google Vision library.
+			Please install google-cloud Python SDK and set google-cloud credentials to run this script.
+
+			Usage: python google-ocr.py INPUT-FILE
+
+[4] tesseract-ocr.py:	Python script to run OCR using Tesseract library.
+			Please install python modules pytesseract and PIL (pillow) to run this script.
+
+			Usage: python tesseract-ocr.py INPUT-FILE
