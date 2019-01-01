@@ -1,5 +1,4 @@
 
-
 # function to run OCR on a given input file
 # using the selected choice of service
 def run_ocr(choice, filename):
@@ -29,7 +28,7 @@ def run_aws(filename):
 		ocr_output = client.detect_text(Image = {'Bytes': image.read()})
 		for text in ocr_output['TextDetections']:
 			if text['Type'] == "LINE":
-				result = result + "<br>" + text['DetectedText']
+				result = result + "<br>" + text['DetectedText'] 
 	return result
 
 # run OCR using google-vision
@@ -57,25 +56,61 @@ def run_tesseract(filename):
 	from PIL import Image
 
 	result = ""
-
 	ocr_output = pytesseract.image_to_string(Image.open(filename))
 	for text in ocr_output.split("\n"):
 		# omit blank lines
 		if text.strip():
-			result = result + "<br>" + text
+			result = result + "<br>" + text 
 
 	return result
 
 # importing flask
 
 import flask
-from flask import request
+from flask import request, render_template
 
 app = flask.Flask(__name__)
-@app.route("/")
 
+# render home-page
+@app.route("/")
 def home():
-	return "Nothing to show here. Try /ocr "
+	return render_template('upload.html')
+
+# save user uploaded file
+@app.route("/upload", methods=['GET', 'POST'])
+def upload():
+
+	from datetime import datetime
+	import requests
+	import os
+
+	# saving the uploaded file
+	if request.method == 'POST' and request.files['file']:
+		file = request.files['file']
+		extn = file.filename.rsplit('.')[1]
+
+		# assign a unique name to uploaded file
+		fname = datetime.now().strftime("%d%m%Y-%H%M%S")
+		filename = fname + "." + extn
+		filepath = "static/" + filename
+
+		file.save(filepath)
+
+		# get choice of OCR service
+		if request.form['choice']:
+			choice = request.form['choice']
+		else:
+			choice = "google-vision"
+
+		response = "<img src=/" + filepath + " width=400 height=300 > <br>"
+		# calling ocr-service
+		url = "http://127.0.0.1:5000/ocr?file=" + filename + "&choice=" + choice
+		ocr_response = requests.get(url)
+
+		response += ocr_response.text
+		return response
+	else:
+		return "Error in processing the request."
 
 @app.route("/ocr", methods=['GET'])
 def ocr():
@@ -97,12 +132,8 @@ def ocr():
 		return response
 
 	filename = "static/" + request.args['file']
-	response = "Running OCR using " + choice + " service on input file " + filename + "<br><br>"
+	ocr_result = run_ocr(choice, filename)
 
-	response += "<img src=/" + filename + " width=400 height=300> <br>"
-	result = run_ocr(choice, filename)
-	response += result
-
-	return response
+	return ocr_result
 
 app.run(debug=True)
