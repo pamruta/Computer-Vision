@@ -1,0 +1,19 @@
+<html>
+	<body>
+	<br> <br>
+	<h2>
+	<form action = "http://127.0.0.1:5000/upload" method = "POST" enctype = "multipart/form-data">
+		Upload File: <input type = "file" name = "file" />
+
+		Choose OCR Service: 
+		<select name="choice">
+			<option value="google-vision">Google-Vision</option>
+			<option value="aws">AWS Rekognition</option>
+			<option value="tesseract">Tesseract</option>
+		</select>
+		<br> <br>
+		<input type = "submit"/>
+	</form>
+	</h2>
+	</body>
+</html>
