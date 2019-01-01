@@ -11,7 +11,7 @@ image_file = sys.argv[1]
 with open(image_file, "rb") as image:
 	response = client.detect_text(Image = {'Bytes': image.read()})
 
-# print json output
+# print OCR output
 
 from pprint import pprint
 
