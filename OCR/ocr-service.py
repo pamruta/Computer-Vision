@@ -28,7 +28,7 @@ def run_aws(filename):
 		ocr_output = client.detect_text(Image = {'Bytes': image.read()})
 		for text in ocr_output['TextDetections']:
 			if text['Type'] == "LINE":
-				result = result + "<br>" + text['DetectedText'] 
+				result = result + "\n" + text['DetectedText'] 
 	return result
 
 # run OCR using google-vision
@@ -44,7 +44,7 @@ def run_google(filename):
 		image_object = vision.types.Image(content=image.read())
 		ocr_output = client.document_text_detection(image=image_object)
 		import re
-		result = re.sub(r'\n', r'<br>', ocr_output.full_text_annotation.text)
+		result = ocr_output.full_text_annotation.text
 
 	return result
 
@@ -60,7 +60,7 @@ def run_tesseract(filename):
 	for text in ocr_output.split("\n"):
 		# omit blank lines
 		if text.strip():
-			result = result + "<br>" + text 
+			result = result + "\n" + text 
 
 	return result
 
@@ -107,7 +107,8 @@ def upload():
 		url = "http://127.0.0.1:5000/ocr?file=" + filename + "&choice=" + choice
 		ocr_response = requests.get(url)
 
-		response += ocr_response.text
+		import re
+		response += re.sub(r'\n', r'<br>', ocr_response.text)
 		return response
 	else:
 		return "Error in processing the request."
