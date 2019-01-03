@@ -87,7 +87,7 @@ def ocr():
 	# there are many options to run OCR, here are few choices
 	available_choices = ['aws', 'google-vision', 'tesseract', 'datacap', 'iris']
 
-	# if no choice is given, using google-vision by default
+	# if no choice is given, use google-vision by default
 	if 'choice' not in request.args:
 		choice = "google-vision"
 	else:
