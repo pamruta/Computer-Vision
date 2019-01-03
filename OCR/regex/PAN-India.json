@@ -1,0 +1,26 @@
+
+{
+	"filename":	"PAN CARD INDIA",
+	"global_date_format":	"dd/mm/yyyy",
+
+	"regexes":
+	[
+		{
+			"match_regex":	"[A-Z]+ [A-Z]+ [A-Z]+",
+			"no_match":	["INCOME TAX DEPARTMENT"],
+			"field_name":	["NAME", "FATHER'S NAME"]
+		},
+
+		{
+			"data_type":	"DATE",
+			"field_name":	["DOB"]
+		},
+
+		{
+			"match_regex":	"Permanent Account Number\n[A-Z]{5}\\d{4}[A-Z]",
+			"strip_expr":	"Permanent Account Number\n",
+			"field_name":	["PAN"]
+		}
+	]
+
+}
