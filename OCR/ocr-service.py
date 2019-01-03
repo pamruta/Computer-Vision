@@ -68,55 +68,19 @@ def run_tesseract(filename):
 
 	return result
 
-# importing flask
+# create flask app
 
 import flask
 from flask import request, render_template
 
 app = flask.Flask(__name__)
 
-# render home-page
 @app.route("/")
 def home():
-	return render_template('upload.html')
+	# nothing to show here..
+	return "To run OCR, use: 127.0.0.1/ocr?file=FILE_NAME"
 
-# save user uploaded file
-@app.route("/upload", methods=['GET', 'POST'])
-def upload():
-
-	from datetime import datetime
-	import requests
-	import os
-
-	# saving the uploaded file
-	if request.method == 'POST' and request.files['file']:
-		file = request.files['file']
-		extn = file.filename.rsplit('.')[1]
-
-		# assign a unique name to uploaded file
-		fname = datetime.now().strftime("%d%m%Y-%H%M%S")
-		filename = fname + "." + extn
-		filepath = "static/" + filename
-
-		file.save(filepath)
-
-		# get choice of OCR service
-		if request.form['choice']:
-			choice = request.form['choice']
-		else:
-			choice = "google-vision"
-
-		response = "<img src=/" + filepath + " width=400 height=300 > <br>"
-		# calling ocr-service
-		url = "http://127.0.0.1:5000/ocr?file=" + filename + "&choice=" + choice
-		ocr_response = requests.get(url)
-
-		import re
-		response += re.sub(r'\n', r'<br>', ocr_response.text)
-		return response
-	else:
-		return "Error in processing the request."
-
+# runs OCR service with given parameters
 @app.route("/ocr", methods=['GET'])
 def ocr():
 	# there are many options to run OCR, here are few choices
@@ -127,9 +91,10 @@ def ocr():
 		choice = "google-vision"
 	else:
 		choice = request.args['choice']
+
 		# check if the choice is valid
 		if choice not in available_choices:
-			response = "Please select your choice from: " + str(available_choices)
+			response = "Please select choice from: " + str(available_choices)
 			return response
 
 	# input file
