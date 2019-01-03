@@ -122,14 +122,15 @@ def ocr():
 	# there are many options to run OCR, here are few choices
 	available_choices = ['aws', 'google-vision', 'tesseract', 'datacap', 'iris']
 
+	# if no choice is given, using google-vision by default
 	if 'choice' not in request.args:
-		response = "Please select your choice from: " + str(available_choices)
-                return response
-
-	choice = request.args['choice']
-	if choice not in available_choices:
-		response = "Please select your choice from: " + str(available_choices)
-		return response
+		choice = "google-vision"
+	else:
+		choice = request.args['choice']
+		# check if the choice is valid
+		if choice not in available_choices:
+			response = "Please select your choice from: " + str(available_choices)
+			return response
 
 	# input file
 	if 'file' not in request.args:
