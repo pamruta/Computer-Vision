@@ -43,12 +43,7 @@ def run_google(filename):
 	with open(filename, "rb") as image:
 		image_object = vision.types.Image(content=image.read())
 		ocr_output = client.document_text_detection(image=image_object)
-		import re
-		result = ""
-		for text in ocr_output.full_text_annotation.text.split("\n"):
-			# skipping foreign language text for now
-			if all(ord(char) < 128 for char in text):
-				result += text + "\n"
+		result = ocr_output.full_text_annotation.text
 
 	return result
 
@@ -83,6 +78,12 @@ def home():
 # runs OCR service with given parameters
 @app.route("/ocr", methods=['GET'])
 def ocr():
+
+	# handling utf-8 encodings
+	import sys
+	reload(sys)
+	sys.setdefaultencoding('utf-8')
+
 	# there are many options to run OCR, here are few choices
 	available_choices = ['aws', 'google-vision', 'tesseract', 'datacap', 'iris']
 

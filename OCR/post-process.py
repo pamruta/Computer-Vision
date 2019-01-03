@@ -45,6 +45,9 @@ def post_process():
 	import sys
 	import re
 
+	reload(sys)
+	sys.setdefaultencoding('utf-8')
+
 	# plain-text input
 	if 'text' not in request.args:
 		return "Please provide input text to parse."
