@@ -44,7 +44,11 @@ def run_google(filename):
 		image_object = vision.types.Image(content=image.read())
 		ocr_output = client.document_text_detection(image=image_object)
 		import re
-		result = ocr_output.full_text_annotation.text
+		result = ""
+		for text in ocr_output.full_text_annotation.text.split("\n"):
+			# skipping foreign language text for now
+			if all(ord(char) < 128 for char in text):
+				result += text + "\n"
 
 	return result
 
@@ -135,6 +139,21 @@ def ocr():
 	filename = "static/" + request.args['file']
 	ocr_result = run_ocr(choice, filename)
 
-	return ocr_result
+	# return output in plain-text format
+	if 'json' not in request.args:
+		return ocr_result
+	else:
+		# extract key-value pairs from text
+		regex_file = request.args['json']
+
+		# write OCR output to text-file
+		from datetime import datetime
+                fname = "ocr-output-" + datetime.now().strftime("%d%m%Y-%H%M%S") + ".txt"
+		open(fname, "w").write(ocr_result)
+
+		import requests
+		url = "http://127.0.0.1:3000/extract?text=" + fname + "&regex=" + regex_file
+		json_output = requests.get(url)
+		return json_output.text
 
 app.run(debug=True)
