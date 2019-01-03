@@ -2,6 +2,7 @@
 # python flask application to extract key-value pairs from plain-text output of OCR
 
 # converts a given date-format into regular expression pattern
+# date-format can look like: dd/mm/yyyy or mm-dd-yy
 def make_date_regex(date_format):
 
 	import re
