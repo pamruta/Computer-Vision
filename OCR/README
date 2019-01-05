@@ -13,19 +13,10 @@ using Google Vision, AWS Rekognition and Tesseract libraries.
 			[2] file: INPUT FILE-NAME to run OCR.
 			    The input file should be placed in /static directory.
 
-			[3] json: REGEX FILE to extract key-value pairs.
-			    If this option is not selected, output of OCR is plain-text by default.
-			    Sample regex files are provided in /regex directory.
-
 			e.g. 127.0.0.1:5000/ocr?choice=google-vision&file=1.jpg
 
 			The above API call will run google-vision OCR on file static/1.jpg and
 			creates output in plain-text format.
-
-			"127.0.0.1:5000/ocr?file=1.jpg&json=NY-DL.json"
-
-			This API call will produce output in JSON format by extracting key-value pairs
-			as defined in the given regex file at /regex/NY-DL.json
 
 [2] aws-ocr.py:		Python program to run OCR from AWS Rekognition library.
 			Please install AWS SDK boto3 and set your AWS credentials to run this script.
@@ -42,16 +33,4 @@ using Google Vision, AWS Rekognition and Tesseract libraries.
 
 			Usage: python tesseract-ocr.py INPUT-FILE
 
-[5] post-process.py:	REST API created in Python flask to post-process the output of OCR.
-			The API takes plain-text output of OCR and extracts key-value pairs as per the given
-			regex file.
-
-			Command "python post-process.py" will start the service at 127.0.0.1:3000
-
-			Input parameters for API:
-
-			[1] text: TEXT_FILE containing plain-text output of OCR
-
-			[2] regex: REGEX_FILE to extract key-value pairs. 
-			    This file should be placed in /regex directory.
 
