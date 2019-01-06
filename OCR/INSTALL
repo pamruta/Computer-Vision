@@ -1,0 +1,35 @@
+
+
+					PACKAGE  DEPENDENCIES
+
+
+Required Packages:
+
+	[1] Python Flask:			"pip install flask"
+
+
+To Use Google-Vision:
+
+	[1] Install Google Vision SDK:		"pip install google-cloud-vision"
+
+	[2] Set Google Credentials in ~/.bash_profile
+
+	e.g. export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_GOOGLE_JSON_KEY
+
+
+To use AWS Rekognition:
+
+	[1] AWS Boto3:				"pip install boto3"
+
+	[2] Set AWS Credentials in ~/.bash_profile: 
+
+	"AWS_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY", "AWS_DEFAULT_REGION"
+
+
+To use Tesseract:
+
+	[1] Tesseract:				"brew install tesseract"
+
+	[2] PyTesseract:			"pip install pytesseract"
+
+	[3] Pillow:				"pip install pillow"
