@@ -16,10 +16,13 @@ using Google Vision, AWS Rekognition and Tesseract libraries.
 			GET method at "127.0.0.1:5000/ocr" assumes that the input file is placed in /static folder
 			POST method at "127.0.0.1:5000/upload" allows user to upload file from their local disk
 
-			e.g. 127.0.0.1:5000/ocr?image=1.jpg
+			Usage: "127.0.0.1:5000/ocr?image=1.jpg"
 
-			The above API call will run google-vision OCR on file static/1.jpg and
-			creates output in plain-text format.
+			The above API call will run google-vision OCR on file static/1.jpg 
+
+			To run OCR using AWS Rekognition, use "127.0.0.1:5000/ocr?image=1.jpg & choice=aws"
+
+			To upload file, call "127.0.0.1:5000/upload" and pass input image via form-data
 
 
 [2] aws-ocr.py:		Python program to run OCR from AWS Rekognition library.
