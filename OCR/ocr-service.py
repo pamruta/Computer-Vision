@@ -63,17 +63,63 @@ def run_tesseract(filename):
 
 	return result
 
-# create flask app
+# create python flask app
 
 import flask
-from flask import request, render_template
+from flask import request
 
 app = flask.Flask(__name__)
 
-@app.route("/")
-def home():
-	# nothing to show here..
-	return "To run OCR, use: 127.0.0.1/ocr?file=FILE_NAME"
+# runs OCR service on input files uploaded from local disk
+@app.route("/upload", methods=['POST'])
+def upload():
+
+	# import required libraries
+	from datetime import datetime
+	import requests
+
+	url = "http://127.0.0.1:5000/ocr?"
+
+	# input image
+	if 'image' not in request.files:
+		response = "Please provide the input file to run OCR."
+		return response
+
+	file = request.files['image']
+
+	# get file extension
+	extn = file.filename.rsplit(".")[1]
+
+	# create unique file name
+	file_name = "image-" + datetime.now().strftime("%d%m%Y-%H%M%S") + "." + extn
+
+	# save file in static directory for further processing
+	file_path = "static/" + file_name
+	file.save(file_path)
+
+	# pass file as input parameter 
+	url += "image=" + file_name
+
+	# choice of OCR service
+	if 'choice' in request.args:
+		url += "&choice=" + request.args['choice']
+
+	# json file to extract key-value pairs 
+	if 'json' in request.files:
+		regex_file = request.files['json']
+
+		# create unique file name
+		regex_name = "regex-" + datetime.now().strftime("%d%m%Y-%H%M%S") + ".json"
+		regex_path = "regex/" + regex_name
+		regex_file.save(regex_path)
+
+		# pass regex file as input parameter
+		url += "&json=" + regex_name
+
+	# send API request
+	response = requests.get(url)
+	return response.text
+
 
 # runs OCR service with given parameters
 @app.route("/ocr", methods=['GET'])
@@ -85,7 +131,7 @@ def ocr():
 	sys.setdefaultencoding('utf-8')
 
 	# there are many options to run OCR, here are few choices
-	available_choices = ['aws', 'google-vision', 'tesseract', 'datacap', 'iris']
+	available_choices = ['aws', 'google-vision', 'tesseract', 'datacap', 'kofax']
 
 	# if no choice is given, use google-vision by default
 	if 'choice' not in request.args:
@@ -98,13 +144,13 @@ def ocr():
 			response = "Please select choice from: " + str(available_choices)
 			return response
 
-	# input file
-	if 'file' not in request.args:
+	# input image
+	if 'image' not in request.args:
 		response = "Please provide the input file to run OCR."
 		return response
 
-	filename = "static/" + request.args['file']
-	ocr_result = run_ocr(choice, filename)
+	input_file = "static/" + request.args['image']
+	ocr_result = run_ocr(choice, input_file)
 
 	# return output in plain-text format
 	if 'json' not in request.args:
@@ -113,13 +159,15 @@ def ocr():
 		# extract key-value pairs from text
 		regex_file = request.args['json']
 
-		# write OCR output to text-file
 		from datetime import datetime
-                fname = "ocr-output-" + datetime.now().strftime("%d%m%Y-%H%M%S") + ".txt"
-		open(fname, "w").write(ocr_result)
+
+		# write OCR output to text-file
+                ocr_text = "ocr-text-" + datetime.now().strftime("%d%m%Y-%H%M%S") + ".txt"
+		ocr_path = "output/" + ocr_text
+		open(ocr_path, "w").write(ocr_result)
 
 		import requests
-		url = "http://127.0.0.1:3000/extract?text=" + fname + "&regex=" + regex_file
+		url = "http://127.0.0.1:3000/extract?text=" + ocr_text + "&regex=" + regex_file
 		json_output = requests.get(url)
 		return json_output.text
 
